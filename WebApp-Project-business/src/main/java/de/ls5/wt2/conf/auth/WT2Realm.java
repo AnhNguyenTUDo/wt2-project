@@ -6,6 +6,7 @@ import java.util.Collections;
 import javax.persistence.EntityManager;
 
 import de.ls5.wt2.conf.auth.permission.ReadNewsItemPermission;
+import de.ls5.wt2.entity.DBUser;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -23,11 +24,14 @@ public class WT2Realm extends AuthorizingRealm implements Realm {
 
     @Autowired
     private EntityManager entityManager;
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        final String user = (String) token.getPrincipal();
-        return new SimpleAccount(user, user.toCharArray(), WT2Realm.REALM);
+        final String userName = (String) token.getPrincipal();
+        final String userPass = (String) token.getCredentials();
+//        this.entityManager.find(DBUser.class, userName
+
+        return new SimpleAccount(userName, userPass, WT2Realm.REALM);
     }
 
     @Override

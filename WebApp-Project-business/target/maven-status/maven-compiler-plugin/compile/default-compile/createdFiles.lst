@@ -5,6 +5,8 @@ de\ls5\wt2\security\SecurityNewsREST.class
 de\ls5\wt2\conf\auth\LogoutFilterWithoutRedirect.class
 de\ls5\wt2\conf\auth\permission\ReadNewsItemPermission.class
 de\ls5\wt2\conf\auth\permission\ViewFirstFiveNewsItemsPermission.class
+de\ls5\wt2\rest\MessagesREST.class
+de\ls5\wt2\rest\UsersREST.class
 de\ls5\wt2\StartupBean.class
 de\ls5\wt2\auth\AuthNewsREST.class
 de\ls5\wt2\conf\auth\BasicAuthenticationFilterWithoutRedirect.class

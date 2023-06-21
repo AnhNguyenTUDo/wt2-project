@@ -16,6 +16,10 @@ import { LoginComponent } from './auth/login/login.component';
 import { CreateNewsAuthComponent } from './auth/create-news-auth/create-news-auth.component';
 import { NewsListComponent } from './angular/news-list/news-list.component';
 import { EnvironmentBadgeComponent } from './shared/environment-badge/environment-badge.component';
+import { CreateMessagesComponent } from './angular/create-messages/create-messages.component';
+import { MessagesListComponent } from './angular/messages-list/messages-list.component';
+import { MessagesDetailsComponent } from './angular/messages-details/messages-details.component';
+import { CreateMessagesSecurityComponent } from './security/create-messages-security/create-messages-security.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,11 @@ import { EnvironmentBadgeComponent } from './shared/environment-badge/environmen
     NewsDetailsComponent,
     LoginComponent,
     NewsListComponent,
-    EnvironmentBadgeComponent
+    EnvironmentBadgeComponent,
+    CreateMessagesComponent,
+    MessagesListComponent,
+    MessagesDetailsComponent,
+    CreateMessagesSecurityComponent
   ],
   imports: [
     BrowserModule,

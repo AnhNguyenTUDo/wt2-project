@@ -11,6 +11,9 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import de.ls5.wt2.entity.DBUser;
+import de.ls5.wt2.entity.DBMessage;
+
 @Component
 @Transactional
 public class StartupBean implements ApplicationListener<ContextRefreshedEvent> {
@@ -31,6 +34,19 @@ public class StartupBean implements ApplicationListener<ContextRefreshedEvent> {
             news.setPublishedOn(new Date());
 
             this.entityManager.persist(news);
+        }
+
+        /////////////////////////////////////////////////////////////////////////////
+        final DBUser firstUserItem = this.entityManager.find(DBUser.class, 1L);
+
+        // only initialize once
+        if (firstUserItem == null) {
+            final DBUser user = new DBUser();
+
+            user.setName("John Doe");
+            user.setPassword("123456");
+
+            this.entityManager.persist(user);
         }
     }
 }

@@ -14,3 +14,24 @@
     <wt2-news-list [news]="news"></wt2-news-list>
   </div>
 </div>
+
+<br>
+<br>
+
+<div class="row">
+  <div class="col-4">
+    <h4 class="title">Create Messages</h4>
+    <hr>
+    <wt2-create-messages (created)="loadMessages()"></wt2-create-messages>
+  </div>
+  <div class="col-8">
+<!--    <h4 class="title">Latest News</h4>-->
+<!--    <hr>-->
+<!--    <wt2-messages-details [messages]="latest"></wt2-messages-details>-->
+<!--    <hr>-->
+    <h4 class="title">All Messages</h4>
+    <hr>
+    <wt2-messages-list [messages]="messages"></wt2-messages-list>
+  </div>
+</div>
+

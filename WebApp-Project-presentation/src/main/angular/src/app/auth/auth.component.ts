@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthNewsService } from './auth-news.service';
+//////////////////////////////////////////////////////////////////////
+import { AuthMessagesService } from './auth-messages.service';
 import { AngularComponent } from '../angular/angular.component';
 import { JwtAuthService } from './jwt-auth.service';
 import { BasicAuthService } from './basic-auth.service';
@@ -12,7 +14,9 @@ import {ActivatedRoute, Params, Route, Router} from "@angular/router";
   selector: 'wt2-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.sass'],
-  providers: [AuthNewsService]
+  providers: [AuthNewsService,
+              ////////////////////////////////////
+              AuthMessagesService]
 })
 export class AuthComponent extends AngularComponent implements OnInit {
 
@@ -22,9 +26,13 @@ export class AuthComponent extends AngularComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private authNewsService: AuthNewsService,
+              //////////////////////////////////////////////////////////
+              private authMessagesService: AuthMessagesService,
               private router: Router,
               private route: ActivatedRoute) {
-    super(authNewsService);
+    super(authNewsService, authMessagesService);
+    ///////////////////////////////////////////////////////////////
+//     super(authMessagesService);
   }
 
   override ngOnInit() {
