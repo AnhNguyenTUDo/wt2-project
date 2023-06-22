@@ -20,6 +20,7 @@ import { CreateMessagesComponent } from './angular/create-messages/create-messag
 import { MessagesListComponent } from './angular/messages-list/messages-list.component';
 import { MessagesDetailsComponent } from './angular/messages-details/messages-details.component';
 import { CreateMessagesSecurityComponent } from './security/create-messages-security/create-messages-security.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { CreateMessagesSecurityComponent } from './security/create-messages-secu
     CreateMessagesComponent,
     MessagesListComponent,
     MessagesDetailsComponent,
-    CreateMessagesSecurityComponent
+    CreateMessagesSecurityComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

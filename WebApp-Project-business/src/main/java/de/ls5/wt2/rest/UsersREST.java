@@ -27,7 +27,8 @@ public class UsersREST {
     @Autowired
     private EntityManager entityManager;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(path = "register",
+                consumes = MediaType.APPLICATION_JSON_VALUE,
                  produces = MediaType.APPLICATION_JSON_VALUE)
     public DBUser create(@RequestBody final DBUser param){
 
