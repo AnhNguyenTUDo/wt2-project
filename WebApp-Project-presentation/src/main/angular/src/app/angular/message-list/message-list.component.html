@@ -1,0 +1,22 @@
+<h2>Message List</h2>
+<ul>
+  <li *ngFor="let message of messages">
+    {{message.id}}
+    <ng-container *ngIf="!isEditing || message.id !== editedMessage.id">
+    {{ message.content }}
+    </ng-container>
+
+    <ng-container *ngIf="isEditing && message.id === editedMessage.id">
+      <input [(ngModel)]="editedMessage.content" type="text">
+    </ng-container>
+
+    <button [disabled]="!(canModifyMessage(message) | async)" (click)="toEditMessage(message)">Edit</button>
+<!--      [disabled]="!canModifyMessage(message)"-->
+<!--      (click)="toEditMessage(message)">Edit</button>-->
+
+    <button [disabled]="!(canModifyMessage(message) | async)"  (click)="deleteMessage(message)">Delete</button>
+<!--      [disabled]="!canModifyMessage(message)"-->
+<!--      (click)="deleteMessage(message)">Delete</button>-->
+    <button *ngIf="isEditing && message.id === editedMessage.id" (click)="editMessage()"> Click to edit</button>
+  </li>
+</ul>

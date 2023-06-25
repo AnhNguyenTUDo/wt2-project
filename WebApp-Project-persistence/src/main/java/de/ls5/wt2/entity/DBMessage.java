@@ -2,25 +2,45 @@ package de.ls5.wt2.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class DBMessage extends DBIdentified {
+@Table(name = "messages")
+public class DBMessage extends DBIdentified{
 
-    private String message;
-    private DBUser user;
+    @Column(nullable = false)
+    private String content;
 
-    public void setMessage(String message) {this.message = message;}
+    private DBUser sender;
 
-    public String getMessage() {return message;}
+    // Constructors, getters, and setters
 
-    public void setUser(DBUser user) {this.user = user;}
+    public DBMessage() {
+    }
+
+    public DBMessage(String content, DBUser sender) {
+        this.content = content;
+        this.sender = sender;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "sender_id", referencedColumnName = "id", nullable = false)
     @JsonIgnoreProperties("messages")
-    public DBUser getUser(){return user;}
+    public DBUser getSender() {
+        return sender;
+    }
 
+    public void setSender(DBUser sender) {
+        this.sender = sender;
+    }
 }

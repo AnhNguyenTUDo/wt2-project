@@ -1,0 +1,30 @@
+<!--<div class="container">-->
+<!--  <h2>Create Message</h2>-->
+<!--  <form (ngSubmit)="onSubmit()">-->
+<!--    <div class="form-group">-->
+<!--      <label for="content">Content:</label>-->
+<!--      <textarea id="content" name="content" [(ngModel)]="content" class="form-control" required></textarea>-->
+<!--    </div>-->
+<!--    <button type="submit" class="btn btn-primary">Create</button>-->
+<!--  </form>-->
+<!--</div>-->
+
+<div class="card">
+  <div class="card-body">
+
+    <div class="alert alert-danger alert-dismissible" *ngIf="errorMessage != null">
+      {{errorMessage}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="errorMessage = null"></button>
+    </div>
+
+    <form (submit)="createMessage($event)">
+      <div class="mb-3">
+        <label class="form-label">Content <span [ngClass]="getCharsLeft() < 0 ? 'text-danger' : 'text-muted'">({{getCharsLeft()}})</span></label>
+        <textarea name="content" class="form-control" required [(ngModel)]="content" placeholder="Enter some content"></textarea>
+      </div>
+      <button class="btn w-100 btn-outline-primary" [disabled]="!canCreate">Create Message</button>
+    </form>
+
+  </div>
+</div>
+

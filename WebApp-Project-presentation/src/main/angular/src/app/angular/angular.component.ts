@@ -1,71 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsService } from './news.service';
-import { News } from '../news';
-
-import { MessagesService } from './messages.service';
-import { Messages } from '../messages';
-
+import { MessageService } from './message.service';
+import { Message } from '../message'
 @Component({
-  selector: 'wt2-angular',
+  selector: 'app-angular',
   templateUrl: './angular.component.html',
   styleUrls: ['./angular.component.sass'],
-  providers: [NewsService,
-  /////////////////////////////////////
-              MessagesService]
+  providers: [MessageService]
 })
 export class AngularComponent implements OnInit {
 
-//   public latest: News | null = null;
-//   public news: News[] = [];
-//
-//   constructor(protected newsService: NewsService) {
-//   }
-//
-//   ngOnInit() {
-//     this.load();
-//   }
-//
-//   load(): void {
-//     this.newsService.getNewest().subscribe({
-//       next: news => this.latest = news,
-//       error: console.error
-//     });
-//     this.newsService.getAll().subscribe({
-//       next: news => this.news = news,
-//       error: console.error
-//     });
-//   }
+  public messages: Message[] = [];
 
-  public latest: News | null = null;
-    public news: News[] = [];
-    public messages: Messages[] = []
-
-
-    constructor(protected newsService: NewsService,
-                protected messagesService: MessagesService) {
-    }
-
-    ngOnInit() {
-      this.load();
-      this.loadMessages();
+  constructor(protected messageService: MessageService){
+  }
+  ngOnInit() {
+    this.load();
     }
 
     load(): void {
-      this.newsService.getNewest().subscribe({
-        next: news => this.latest = news,
-        error: console.error
-      });
-      this.newsService.getAll().subscribe({
-        next: news => this.news = news,
-        error: console.error
-      });
+      this.messageService.getAll().subscribe({
+        next: messages => this.messages = messages,
+        error: error => {
+                console.error(error);
+                console.log("cannot get messages");}
+      })
     }
-
-    loadMessages(): void {
-
-          this.messagesService.getAll().subscribe({
-            next: messages => this.messages = messages,
-            error: console.error
-          });
-        }
 }

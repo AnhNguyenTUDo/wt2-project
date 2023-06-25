@@ -1,0 +1,13 @@
+<div class="alert alert-info" *ngIf="message == null">
+  Nothing to see here.
+</div>
+
+<div *ngIf="message != null">
+  <div class="mt-2">
+    <h5>{{message.sender}}</h5>
+    <div [innerHTML]="getTrustedHtml(message.content)" *ngIf="allowHtmlContent"></div>
+    <div *ngIf="!allowHtmlContent">
+      {{message.content}}
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 package de.ls5.wt2.entity;
 
 import javax.annotation.Generated;
-import javax.persistence.metamodel.SetAttribute;
+import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -10,12 +10,12 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class DBUser_ extends de.ls5.wt2.entity.DBIdentified_ {
 
 	public static volatile SingularAttribute<DBUser, String> password;
-	public static volatile SingularAttribute<DBUser, String> name;
-	public static volatile SetAttribute<DBUser, DBMessage> messages;
+	public static volatile ListAttribute<DBUser, DBMessage> messages;
+	public static volatile SingularAttribute<DBUser, String> username;
 
 	public static final String PASSWORD = "password";
-	public static final String NAME = "name";
 	public static final String MESSAGES = "messages";
+	public static final String USERNAME = "username";
 
 }
 

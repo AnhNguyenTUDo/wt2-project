@@ -6,7 +6,7 @@
 <form (submit)="register()">
   <div class="mb-3">
     <label class="form-label">Username</label>
-    <input name="name" type="text" class="form-control" [(ngModel)]="name" required placeholder="Enter your username">
+    <input name="name" type="text" class="form-control" [(ngModel)]="username" required placeholder="Enter your username">
   </div>
   <div class="mb-3">
     <label class="form-label">Password</label>
@@ -14,19 +14,3 @@
   </div>
   <button class="btn w-100 btn-outline-primary" [disabled]="!canRegister">Register</button>
 </form>
-
-<!--<div class="container">-->
-<!--  <h1>Registration Form</h1>-->
-<!--  <form (submit)="register()">-->
-<!--    <div class="mb-3">-->
-<!--      <label for="name" class="form-label">Username</label>-->
-<!--      <input type="text" class="form-control" id="name" [(ngModel)]="name" required>-->
-<!--    </div>-->
-<!--    <div class="mb-3">-->
-<!--      <label for="password" class="form-label">Password</label>-->
-<!--      <input type="password" class="form-control" id="password" [(ngModel)]="password" required>-->
-<!--    </div>-->
-<!--    <button type="submit" class="btn btn-primary">Register</button>-->
-<!--  </form>-->
-<!--</div>-->
-

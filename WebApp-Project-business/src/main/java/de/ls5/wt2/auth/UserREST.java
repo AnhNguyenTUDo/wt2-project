@@ -1,29 +1,77 @@
 package de.ls5.wt2.auth;
 
+import de.ls5.wt2.entity.DBUser;
+import de.ls5.wt2.service.UserService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.subject.Subject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 @Transactional
 @RestController
-@RequestMapping(path = {"rest/auth/session/profile", "rest/auth/basic/profile", "rest/auth/jwt/profile"})
+@RequestMapping("/rest/users")
 public class UserREST {
+    private UserService userService;
 
-    @GetMapping(produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<?> getProfile() {
+    public UserREST(UserService userService) {
+        this.userService = userService;
+    }
 
-        final Subject subject = SecurityUtils.getSubject();
-
-        if (!subject.isAuthenticated()) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    @PostMapping(path = "register",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> registerUser(@RequestBody DBUser user) {
+        if (userService.getUserByUsername(user.getUsername()) != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exists");
         }
 
-        return ResponseEntity.ok(subject.getPrincipal().toString());
+        userService.createUser(user);
+//        Map<String, String> response = Collections.singletonMap("message", "User registered successfully");
+        return ResponseEntity.ok("User registered successfully");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestHeader("Authorization") String authorizationHeader) {
+        String encodedCredentials = authorizationHeader.replace("Basic ", "");
+        String credentials = new String(Base64.getDecoder().decode(encodedCredentials));
+        String[] usernamePassword = credentials.split(":");
+
+        String username = usernamePassword[0];
+        String password = usernamePassword[1];
+
+        Subject currentUser = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+
+        try {
+            currentUser.login(token);
+            return ResponseEntity.ok(HttpStatus.OK);
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();//.body("Login failed");
+        }
+    }
+    @GetMapping("/role")
+    public ResponseEntity<Boolean> isAdmin() {
+        Subject subject = SecurityUtils.getSubject();
+        System.out.println("//////////////////////////////////////////// IS AUTHENTICATED: " + subject.isAuthenticated());
+        if (!subject.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        DBUser user = (DBUser) subject.getPrincipal();
+        if (user == null) {
+            System.out.println("//////////////////////////////////////////// USER NULL");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        boolean isAdmin = subject.hasRole("admin");
+        return ResponseEntity.ok(isAdmin);
     }
 }

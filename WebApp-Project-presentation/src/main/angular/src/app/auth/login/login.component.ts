@@ -1,30 +1,40 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { BasicAuthService } from '../basic-auth.service';
+import { AuthMessageService } from '../auth-message.service'
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'wt2-login',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent {
 
   @Input()
-  public authService: AuthService;
+  public authService: BasicAuthService =  new BasicAuthService(this.http);
+  constructor(private http: HttpClient) {}
 
   @Output()
   public loggedIn = new EventEmitter<void>();
 
+//   constructor() {
+//       this.authService = new BasicAuthService();
+//     }
+
   public username: string = "";
   public password: string = "";
-  public errorMessage: string;
+  public errorMessage: string | null = null;
 
   login(e: Event) {
     e.preventDefault();
     this.errorMessage = null;
     if (this.canLogin) {
       this.authService.login(this.username, this.password).subscribe({
-        next: () => this.loggedIn.emit(),
-        error: () => this.errorMessage = 'Failed to login'
+        next: () => {this.loggedIn.emit();
+                      console.log("is loggedin");},
+        error: (error) => {this.errorMessage = 'Failed to login';
+        console.log(this.errorMessage);
+        console.log(error);}
       });
     }
   }

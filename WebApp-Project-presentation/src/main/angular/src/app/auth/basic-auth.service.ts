@@ -1,50 +1,83 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from './auth.service';
-import { map } from 'rxjs/operators';
-import { environment as env } from '../../environments/environment';
+import { Observable, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
-export class BasicAuthService extends AuthService {
+export class BasicAuthService {
+  private token: string | null = null;
+  public isAdmin: boolean = false;
 
-  private token: string;
+  constructor(private http: HttpClient) {}
 
-  constructor(protected override http: HttpClient) {
-    super(http)
-  }
+  login(username: string, password: string): Observable<boolean> {
+    const encodedToken = btoa(`${username}:${password}`);
+    const authHeader = `Basic ${encodedToken}`;
 
-  override login(username: string, password: string): Observable<boolean> {
-    const token = decodeURIComponent(encodeURIComponent(username + ':' + password));
-    const encodedToken = window.btoa(token);
+    const headers = new HttpHeaders({
+      'Authorization': authHeader,
+      'Content-Type': 'application/json'
+    });
 
-    return this.http.head(`${this.getBaseUrl()}/profile`, {headers: this.getAuthHeadersForToken(encodedToken), responseType: 'text'})
-        .pipe(map(body => {
+    return this.http.post<any>(`${environment.apiUrl}/users/login`, {}, { headers }).pipe(
+        switchMap(body => {
           this.token = encodedToken;
-          return true;
-        }));
+          console.log('token: ' + this.token);
+
+          // Check if the user is an admin
+          return this.isAdminCheck().pipe(
+            map(isAdmin => {
+              this.isAdmin = isAdmin;
+              console.log('isAdmin: ' + this.isAdmin);
+              return true;
+            }),
+            catchError(() => of(false))
+          );
+        }),
+        catchError(() => of(false))
+      );
+    }
+
+  checkAuthorization(id: string): Observable<boolean>{
+    const headers = this.getAuthHeaders();
+    return this.http.get<boolean>(`/rest/messages/authorization/${id}`, {headers}).pipe(
+      catchError(() => of(false))
+    );
   }
 
-  override logout(): Observable<boolean> {
+//   getUserRole(): Observable<boolean> {
+//     const headers = this.getAuthHeaders();
+//     return this.http.get<boolean>(`${environment.apiUrl}/users/role`, { headers }).pipe(
+//       map(role => role === 'admin'),
+//       catchError(() => of(false))
+//     );
+//   }
+
+  isAdminCheck(): Observable<boolean> {
+      const headers = this.getAuthHeaders();
+      return this.http.get<boolean>(`${environment.apiUrl}/users/role`, { headers }).pipe(
+        catchError(() => of(false))
+      );
+    }
+    resetAdminStatus():void{
+    this.isAdmin = false;
+    }
+
+  getBaseUrl(): string {
+      return `${environment.apiUrl}`;
+    }
+
+  logout(): Observable<boolean> {
     this.token = null;
     return of(true);
   }
 
-  override getAuthHeaders(): HttpHeaders {
-    return this.getAuthHeadersForToken(this.token);
+  getAuthHeaders(): HttpHeaders {
+    return this.token ? new HttpHeaders({ 'Authorization': `Basic ${this.token}` }) : new HttpHeaders();
   }
 
-  override getBaseUrl(): string {
-    return `${env.apiUrl}/auth/basic`;
-  }
-
-  override get isLoggedIn(): boolean {
+  get isLoggedIn(): boolean {
     return this.token != null;
-  }
-
-  getAuthHeadersForToken(token: string): HttpHeaders {
-    return token == null ? new HttpHeaders() : new HttpHeaders({
-      "Authorization": `Basic ${token}`
-    });
   }
 }

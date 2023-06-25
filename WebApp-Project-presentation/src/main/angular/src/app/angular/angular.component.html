@@ -1,37 +1,29 @@
-<div class="row">
-  <div class="col-4">
-    <h4 class="title">Create News</h4>
-    <hr>
-    <wt2-create-news (created)="load()"></wt2-create-news>
+<div class="container">
+  <h1>Angular Application</h1>
+  <hr>
+
+  <div class="row">
+    <div class="col-md-6">
+      <app-message-list [messages]="messages"></app-message-list>
+    </div>
+    <div class="col-md-6">
+      <app-message-detail></app-message-detail>
+    </div>
   </div>
-  <div class="col-8">
-    <h4 class="title">Latest News</h4>
-    <hr>
-    <wt2-news-details [news]="latest"></wt2-news-details>
-    <hr>
-    <h4 class="title">All News</h4>
-    <hr>
-    <wt2-news-list [news]="news"></wt2-news-list>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-6">
+      <app-create-message (created)="load()"></app-create-message>
+    </div>
+    <div class="col-md-6">
+      <app-edit-message></app-edit-message>
+    </div>
+    <div class="col-md-6">
+      <app-delete-message></app-delete-message>
+    </div>
   </div>
+  <hr>
+
 </div>
-
-<br>
-<br>
-
-<div class="row">
-  <div class="col-4">
-    <h4 class="title">Create Messages</h4>
-    <hr>
-    <wt2-create-messages (created)="loadMessages()"></wt2-create-messages>
-  </div>
-  <div class="col-8">
-<!--    <h4 class="title">Latest News</h4>-->
-<!--    <hr>-->
-<!--    <wt2-messages-details [messages]="latest"></wt2-messages-details>-->
-<!--    <hr>-->
-    <h4 class="title">All Messages</h4>
-    <hr>
-    <wt2-messages-list [messages]="messages"></wt2-messages-list>
-  </div>
-</div>
-

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { User } from '../user';
 import { environment as env } from '../../environments/environment';
-import { Users } from '../users';
-import { map } from 'rxjs/operators';
 
 @Injectable()
 export class RegisterService{
@@ -14,17 +14,27 @@ export class RegisterService{
       'Content-Type': 'application/json'
     });
 
-  registerUser(name: string, password: string): Observable<Users> {
-      return this.http.post(`${env.apiUrl}/user/register`, {name, password}, {headers: this.defaultHeaders}).pipe(
-         map(body => Users.fromObject(body))
-         );
-    }
-
-//     create(headline: string, content: string): Observable<News> {
-//         return this.http.post(`${env.apiUrl}/news`, {headline, content}, {headers: this.defaultHeaders}).pipe(
-//           map(body => News.fromObject(body))
-//         );
-//       }
-
+//   registerUser(username: string, password: string): Observable<User> {
+//       return this.http.post(`rest/users/register`,
+//                             {username, password},
+//                             {headers: this.defaultHeaders})
+//                 .pipe(map(body => User.fromObject(body)),
+//                         catchError((error: any) => {
+//                           // Handle the error here
+//                           console.error('Registration failed:', error);
+//                           return throwError('Failed to register');
+//                         })
+//                       );;
+//     }
+    registerUser(username: string, password: string): Observable<any> {
+          return this.http.post(`${env.apiUrl}/users/register`, {username, password}, {headers: this.defaultHeaders, responseType: 'text'}).pipe(
+//              map(body => User.fromObject(body)),
+                                     catchError((error: any) => {
+                                       // Handle the error here
+                                       console.error('Registration failed:', error);
+                                       return throwError('Failed to register');
+                                     })
+             );
+        }
 
 }

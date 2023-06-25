@@ -1,41 +1,60 @@
 package de.ls5.wt2.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import java.util.HashSet;
-import java.util.Set;
-
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "users")
 public class DBUser extends DBIdentified {
 
-    private String name;
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    @Column(nullable = false)
     private String password;
-    private Set<DBMessage> messages;
+
+//    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    private List<DBMessage> messages = new ArrayList<>();
 
     public DBUser() {
-        this.messages = new HashSet<>();
     }
 
-    public String getName() { return name;}
+    public DBUser(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
-    public void setName(String name) { this.name = name;}
+    public String getUsername() {
+        return username;
+    }
 
-    public String getPassword() { return password;}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    public void setPassword(String password) { this.password = password;}
+    public String getPassword() {
+        return password;
+    }
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("user")
-    public Set<DBMessage> getMessages() {return messages;}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-    public void setMessages(Set<DBMessage> messages) { this.messages = messages;}
+    @OneToMany(mappedBy = "sender", fetch = FetchType.EAGER, orphanRemoval = true )//, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("sender")
+    public List<DBMessage> getMessages() {
+        return messages;
+    }
 
+    public void setMessages(List<DBMessage> messages) {
+        this.messages = messages;
+    }
+
+    public void addMessage(DBMessage message) {
+        messages.add(message);
+        message.setSender(this);
+    }
 }

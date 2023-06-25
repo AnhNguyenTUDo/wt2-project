@@ -8,11 +8,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(DBMessage.class)
 public abstract class DBMessage_ extends de.ls5.wt2.entity.DBIdentified_ {
 
-	public static volatile SingularAttribute<DBMessage, String> message;
-	public static volatile SingularAttribute<DBMessage, DBUser> user;
+	public static volatile SingularAttribute<DBMessage, String> content;
 
-	public static final String MESSAGE = "message";
-	public static final String USER = "user";
+	public static final String CONTENT = "content";
 
 }
 
