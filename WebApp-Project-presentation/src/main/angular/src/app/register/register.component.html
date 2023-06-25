@@ -3,6 +3,12 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="errorMessage = null"></button>
 </div>
 
+<div class="alert alert-success alert-dismissible" *ngIf="successMessage !== ''">
+  {{ successMessage }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="successMessage = ''"></button>
+</div>
+
+
 <form (submit)="register()">
   <div class="mb-3">
     <label class="form-label">Username</label>

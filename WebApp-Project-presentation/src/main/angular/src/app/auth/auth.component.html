@@ -1,31 +1,28 @@
 <div *ngIf="!isLoggedIn">
-  <h4 class="title">Login</h4>
-  <hr>
   <app-login [authService]="authService" (loggedIn)="load()"></app-login>
 </div>
 
 <div *ngIf="isLoggedIn">
 
   <div class="row">
-    <div class="col-12 text-right">
-      <button class="btn btn-sm btn-outline-secondary" (click)="logout()">Logout</button>
+    <div class="col-10 d-flex justify-content-end "> <h2>Welcome, {{ loggedInUsername }}!</h2></div>
+    <div class="col-2 d-flex justify-content-end align-items-center">
+      <button class="btn btn-outline-secondary" (click)="logout()">Logout</button>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-4">
-      <h4 class="title">Create News</h4>
-      <hr>
-      <app-create-message-auth (created)="load()"></app-create-message-auth>
-    </div>
-    <div class="col-8">
-<!--      <h4 class="title">Latest News</h4>-->
-<!--      <hr>-->
-<!--      <wt2-news-details [news]="latest"></wt2-news-details>-->
-<!--      <hr>-->
-      <h4 class="title">All Messages</h4>
-      <hr>
-      <app-message-list [messages]="messages"></app-message-list>
-    </div>
+  <div class="row" >
+
+    <h4 class="title">Messages</h4>
+    <hr>
+<!--    <div class="box-container mb-2">-->
+      <div class="message-list-container box-container mb-2">
+        <app-message-list [messages]="messages"></app-message-list>
+      </div>
+<!--    </div>-->
+
+      <div class="mt-2">
+        <app-create-message-auth (created)="load()"></app-create-message-auth>
+      </div>
   </div>
 </div>

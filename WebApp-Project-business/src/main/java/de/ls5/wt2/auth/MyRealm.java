@@ -27,7 +27,8 @@ public class MyRealm extends AuthorizingRealm {
         DBUser user = userService.getUserByUsername(username);
 
         if (user == null) {
-            throw new UnknownAccountException("User not found");
+//            throw new UnknownAccountException("User not found");
+            return null;
         }
 
         // Create the authentication info with the user's password and realm name

@@ -13,10 +13,6 @@ import { MessageService } from '../angular/message.service'
 })
 export class AuthComponent  extends AngularComponent implements OnInit {
 
-//   isLoggedIn: boolean = false;
-
-//   authService: BasicAuthService = new BasicAuthService(this.http);
-//
   constructor(private http: HttpClient,
               private authMessageService: AuthMessageService,
               public authService: BasicAuthService) {
@@ -37,17 +33,14 @@ export class AuthComponent  extends AngularComponent implements OnInit {
           this.messages = [];
         });
 
-//       this.authService.logout().subscribe();
-//       this.messages = [];
-
-//       this.isLoggedIn = false;
-//         this.authService.logout().subscribe(() => {
-//               this.isLoggedIn = false;
-//             });
     }
     get isLoggedIn(): boolean {
         return this.authService.isLoggedIn;
         console.log("isLoggedIn" + this.isLoggedIn);
       }
+
+    get loggedInUsername(): string | null {
+      return this.authService.username;
+    }
 }
 

@@ -9,8 +9,8 @@
 <!--  </form>-->
 <!--</div>-->
 
-<div class="card">
-  <div class="card-body">
+<!--<div class="card">-->
+<!--  <div class="card-body">-->
 
     <div class="alert alert-danger alert-dismissible" *ngIf="errorMessage != null">
       {{errorMessage}}
@@ -22,9 +22,9 @@
         <label class="form-label">Content <span [ngClass]="getCharsLeft() < 0 ? 'text-danger' : 'text-muted'">({{getCharsLeft()}})</span></label>
         <textarea name="content" class="form-control" required [(ngModel)]="content" placeholder="Enter some content"></textarea>
       </div>
-      <button class="btn w-100 btn-outline-primary" [disabled]="!canCreate">Create Message</button>
+      <button class="btn w-100 btn-outline-primary" [disabled]="!canCreate">Send Message</button>
     </form>
 
-  </div>
-</div>
+<!--  </div>-->
+<!--</div>-->
 

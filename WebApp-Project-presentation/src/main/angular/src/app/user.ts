@@ -4,8 +4,8 @@ export class User {
 
   static fromObject(object: any): User {
     const user = new User();
-    user.username = object.name;
-    user.password = object.password;
+    user.username = object.username;
+    user.password  = object.password;
     return user;
   }
 }

@@ -29,13 +29,30 @@ export class LoginComponent {
     e.preventDefault();
     this.errorMessage = null;
     if (this.canLogin) {
-      this.authService.login(this.username, this.password).subscribe({
-        next: () => {this.loggedIn.emit();
-                      console.log("is loggedin");},
-        error: (error) => {this.errorMessage = 'Failed to login';
-        console.log(this.errorMessage);
-        console.log(error);}
-      });
+      this.authService.login(this.username, this.password).subscribe(//{
+//////////////////////////DO NOT DELETE///////////////////////
+//         next: () => {this.loggedIn.emit();
+//                       console.log("is loggedin", this.loggedIn);},
+//         error: (error: any) => {
+//                             console.error('Login failed:', error);
+//                             this.errorMessage = 'Failed to login!';
+//                           }
+        (loggedIn: boolean) => {
+                if (loggedIn) {
+                  this.loggedIn.emit();
+                  console.log("is loggedin", this.loggedIn);
+                } else {
+                  // Handle login failure here
+                  this.errorMessage = 'Invalid username or password';
+                }
+              },
+              (error: any) => {
+                console.error('Login failed:', error);
+                this.errorMessage = 'Failed to login!';
+              }
+//           );
+      //}
+      );
     }
   }
 

@@ -71,20 +71,20 @@ export class MessageListComponent  implements OnInit{
 
     canModifyMessage(message: Message): Observable<boolean>{
       const messageId = message.id.toString();
-        console.log("in message list component FALSE " + this.authService.isAdmin);
+//         console.log("in message list component FALSE " + this.authService.isAdmin);
       if (this.authService.isAdmin) {
-          console.log("in message list component should be TRUE" + this.authService.isAdmin);
+//           console.log("in message list component should be TRUE" + this.authService.isAdmin);
           return of(true);
         }
 
       if (this.authorizationStatus.hasOwnProperty(messageId)) {
-            console.log("status HAS PROPERTY"+this.authorizationStatus[messageId]);
+//             console.log("status HAS PROPERTY"+this.authorizationStatus[messageId]);
             return of(this.authorizationStatus[messageId]);
           }
 
       return this.authService.checkAuthorization(messageId).pipe(
           map((response: boolean) => {
-          console.log("RESPONSE" + response);
+//           console.log("RESPONSE" + response);
             this.authorizationStatus[messageId] = response;
             return response;
           }),

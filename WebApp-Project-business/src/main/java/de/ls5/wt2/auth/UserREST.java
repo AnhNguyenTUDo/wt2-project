@@ -37,7 +37,7 @@ public class UserREST {
 //        Map<String, String> response = Collections.singletonMap("message", "User registered successfully");
         return ResponseEntity.ok("User registered successfully");
     }
-
+//////////////DO NOT DELETE, IS THE ORIGINAL
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestHeader("Authorization") String authorizationHeader) {
         String encodedCredentials = authorizationHeader.replace("Basic ", "");
@@ -54,9 +54,30 @@ public class UserREST {
             currentUser.login(token);
             return ResponseEntity.ok(HttpStatus.OK);
         } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();//.body("Login failed");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials!");//.body("Login failed");
         }
     }
+
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestHeader("Authorization") String authorizationHeader) {
+//        String encodedCredentials = authorizationHeader.replace("Basic ", "");
+//        String credentials = new String(Base64.getDecoder().decode(encodedCredentials));
+//        String[] usernamePassword = credentials.split(":");
+//
+//        String username = usernamePassword[0];
+//        String password = usernamePassword[1];
+//
+//        Subject currentUser = SecurityUtils.getSubject();
+//        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+//
+//        try {
+//            currentUser.login(token);
+//            return ResponseEntity.ok(HttpStatus.OK);
+//        } catch (AuthenticationException e) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+//        }
+//    }
+
     @GetMapping("/role")
     public ResponseEntity<Boolean> isAdmin() {
         Subject subject = SecurityUtils.getSubject();

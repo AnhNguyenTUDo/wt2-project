@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 export class BasicAuthService {
   private token: string | null = null;
   public isAdmin: boolean = false;
+  public username: string | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -24,6 +25,7 @@ export class BasicAuthService {
         switchMap(body => {
           this.token = encodedToken;
           console.log('token: ' + this.token);
+          this.username = username;
 
           // Check if the user is an admin
           return this.isAdminCheck().pipe(

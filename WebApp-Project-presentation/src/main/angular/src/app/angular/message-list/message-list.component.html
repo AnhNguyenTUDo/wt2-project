@@ -1,22 +1,35 @@
-<h2>Message List</h2>
+<!--<h2>Message List</h2>-->
 <ul>
-  <li *ngFor="let message of messages">
-    {{message.id}}
+  <li *ngFor="let message of messages" class="d-flex justify-content-between align-items-center mb-3">
     <ng-container *ngIf="!isEditing || message.id !== editedMessage.id">
-    {{ message.content }}
+      <div><span class="message-content">{{ message.content }}</span><br>
+        <span class="text-muted">- from {{ message.sender }}</span></div>
+
+
     </ng-container>
 
     <ng-container *ngIf="isEditing && message.id === editedMessage.id">
       <input [(ngModel)]="editedMessage.content" type="text">
     </ng-container>
 
-    <button [disabled]="!(canModifyMessage(message) | async)" (click)="toEditMessage(message)">Edit</button>
-<!--      [disabled]="!canModifyMessage(message)"-->
-<!--      (click)="toEditMessage(message)">Edit</button>-->
+    <div class="d-flex">
+    <button [disabled]="!(canModifyMessage(message) | async)"
+            class="btn btn-sm btn-primary me-2"
+            (click)="toEditMessage(message)">
+      Edit
+    </button>
 
-    <button [disabled]="!(canModifyMessage(message) | async)"  (click)="deleteMessage(message)">Delete</button>
-<!--      [disabled]="!canModifyMessage(message)"-->
-<!--      (click)="deleteMessage(message)">Delete</button>-->
-    <button *ngIf="isEditing && message.id === editedMessage.id" (click)="editMessage()"> Click to edit</button>
+    <button [disabled]="!(canModifyMessage(message) | async)"
+            class="btn btn-sm btn-danger me-2"
+            (click)="deleteMessage(message)">
+      Delete
+    </button>
+
+    <button *ngIf="isEditing && message.id === editedMessage.id"
+            class="btn btn-sm btn-primary"
+            (click)="editMessage()"> Confirm change
+    </button>
+    </div>
   </li>
+
 </ul>
