@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Data model for user entity in database,
+ * which contains attributes (id, username, password)
+ * and has one to many relationship with message entity.
+ */
 @Entity
 @Table(name = "users")
 public class DBUser extends DBIdentified {
@@ -16,7 +21,6 @@ public class DBUser extends DBIdentified {
     @Column(nullable = false)
     private String password;
 
-//    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
     private List<DBMessage> messages = new ArrayList<>();
 
     public DBUser() {

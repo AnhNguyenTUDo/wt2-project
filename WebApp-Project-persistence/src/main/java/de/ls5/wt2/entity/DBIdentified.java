@@ -4,6 +4,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+/*
+ * Data model representing no real entity in database,
+ * is used to generate unique values  (primary keys) in subclasses
+ */
 @MappedSuperclass
 public class DBIdentified {
 

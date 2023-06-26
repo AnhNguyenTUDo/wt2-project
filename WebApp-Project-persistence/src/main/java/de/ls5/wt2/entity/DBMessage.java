@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Data model for message entity in database,
+ * which contains attributes (id, content, sender)
+ * and has many to one relationship with user entity.
+ */
 @Entity
 @Table(name = "messages")
 public class DBMessage extends DBIdentified{
@@ -15,7 +20,6 @@ public class DBMessage extends DBIdentified{
 
     private DBUser sender;
 
-    // Constructors, getters, and setters
 
     public DBMessage() {
     }

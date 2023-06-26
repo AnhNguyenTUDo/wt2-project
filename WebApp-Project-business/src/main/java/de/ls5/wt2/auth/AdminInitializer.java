@@ -7,12 +7,21 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+
+/*
+ * Initialize an account for admin if it doesn't exist in the database.
+ */
 @Component
 public class AdminInitializer {
 
     @Autowired
     private UserService userService;
 
+
+    /*
+     * Initialize an admin account if it doesn't exist in the database.
+     * (Will be automatically invoked by the Spring container after the bean is instantiated)
+     */
     @PostConstruct
     public void initializeAdmin() {
         if(userService.getUserByUsername("admin") == null){
@@ -21,7 +30,6 @@ public class AdminInitializer {
             admin.setUsername("admin");
             admin.setPassword("admin");
             userService.createUser(admin);
-
         }
     }
 
