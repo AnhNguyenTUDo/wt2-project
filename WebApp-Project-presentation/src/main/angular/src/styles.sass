@@ -1,1 +1,22 @@
+$custom-green: #99A98F
+$custom-yellow: #FFF8DE
 
+@mixin styles
+  .custom-container-border
+    border: 1px solid $custom-green
+    border-radius: 10rem
+    border-width: 3px
+    color: $custom-green
+
+@mixin custom-font
+  .custom-font
+    font-weight: bold
+    font-size: 1.2em
+
+@mixin custom-btn
+  .custom-btn
+    @extend .custom-container-border
+    @extend .custom-font
+
+    &:hover
+      background-color: $custom-yellow

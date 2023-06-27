@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AngularComponent } from '../angular/angular.component';
 import { BasicAuthService } from './basic-auth.service';
@@ -12,6 +12,14 @@ import { MessageService } from '../angular/message.service'
   providers: [AuthMessageService, MessageService]
 })
 export class AuthComponent  extends AngularComponent implements OnInit {
+
+    @Output()
+    editToggleEvent = new EventEmitter<boolean>();
+    @Output()
+    deleteToggleEvent = new EventEmitter<boolean>();
+
+    public showDeleteButtons: boolean = false;
+    public showEditButtons: boolean = false;
 
   constructor(private http: HttpClient,
               private authMessageService: AuthMessageService,
@@ -42,5 +50,16 @@ export class AuthComponent  extends AngularComponent implements OnInit {
     get loggedInUsername(): string | null {
       return this.authService.username;
     }
+
+     toggleEditButtons(e: Event){
+//      e.preventDefault();
+      this.showEditButtons = !this.showEditButtons;
+      this.editToggleEvent.emit(this.showEditButtons);
+     }
+     toggleDeleteButtons(e: Event) {
+//       e.preventDefault();
+      this.showDeleteButtons = !this.showDeleteButtons;
+      this.deleteToggleEvent.emit(this.showDeleteButtons);
+     }
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { MessageService } from '../message.service';
 import { Message } from '../../message';
 import { BasicAuthService } from '../../auth/basic-auth.service'
@@ -15,8 +15,9 @@ export class MessageListComponent  implements OnInit{
     public isEditing: boolean = false;
     public editedMessage: Message;
     public authorizationStatus: { [messageId: string]: boolean} = {};
-    public showEditButtons: Boolean = false;
-    public showDeleteButtons: Boolean = false;
+
+    @Input()
+    parent: any;
 
     @Input()
     public messages: Message[] = [];
@@ -44,8 +45,7 @@ export class MessageListComponent  implements OnInit{
     editMessage() {
       this.messageService.update(this.editedMessage.id, this.editedMessage.content)
           .subscribe(updatedMessage => {
-            // Handle the updated message, e.g., display a success message
-            console.log('Message updated:', updatedMessage);
+//             console.log('Message updated:', updatedMessage);
             this.isEditing = false;
             this.editedMessage = {} as Message;
 
@@ -55,7 +55,6 @@ export class MessageListComponent  implements OnInit{
                     }
 
           }, error => {
-            // Handle the error case, e.g., display an error message
             console.error('Error updating message:', error);
             this.editedMessage = {} as Message;
           });
@@ -65,7 +64,7 @@ export class MessageListComponent  implements OnInit{
       this.messageService.delete(message.id)
         .subscribe(() => {
            this.messages = this.messages.filter(m => m.id !== message.id);
-           console.log('Message deleted:', message);
+//            console.log('Message deleted:', message);
         }, error => {
            console.error('Error deleting message:', error);
           });
@@ -73,20 +72,16 @@ export class MessageListComponent  implements OnInit{
 
     canModifyMessage(message: Message): Observable<boolean>{
       const messageId = message.id.toString();
-//         console.log("in message list component FALSE " + this.authService.isAdmin);
       if (this.authService.isAdmin) {
-//           console.log("in message list component should be TRUE" + this.authService.isAdmin);
           return of(true);
         }
 
       if (this.authorizationStatus.hasOwnProperty(messageId)) {
-//             console.log("status HAS PROPERTY"+this.authorizationStatus[messageId]);
             return of(this.authorizationStatus[messageId]);
           }
 
       return this.authService.checkAuthorization(messageId).pipe(
           map((response: boolean) => {
-//           console.log("RESPONSE" + response);
             this.authorizationStatus[messageId] = response;
             return response;
           }),
@@ -95,46 +90,5 @@ export class MessageListComponent  implements OnInit{
             return of(false);
           })
         );
-
-//       this.checkAuthorizationStatus(messageId);
-//       return false;
-     }
-
-     toggleEditButtons(){
-      this.showEditButtons = !this.showEditButtons;
-     }
-     toggleDeleteButtons() {
-      this.showDeleteButtons = !this.showDeleteButtons;
-     }
-//
-//       checkAuthorizationStatus(messageId: string) {
-//           this.authService.checkAuthorization(messageId).subscribe(
-//             (response: boolean) => {
-//               this.authorizationStatus[messageId] = response;
-//             },
-//             (error) => {
-//               console.error('Error checking authorization:', error);
-//             }
-//           );
-//         }
-//       canModifyMessage(message: Message): Observable<boolean> {
-//         // Check if the user is logged in
-//         if (!this.authService.isLoggedIn) {
-//           return false;
-//         }
-//
-//         // Check if the user has the necessary role or permission to modify the message
-//         // Replace this logic with your actual authorization checks
-//         this.authService.getUserRole().subscribe((roles: Set<string>) => {
-//           // For example, if the user has the 'admin' role, they can modify any message
-//           if (roles.has('admin')) {
-//             return true;
-//           }
-//
-//           // For non-admin users, check if the message belongs to the authenticated user
-//           return this.authService.checkAuthorization(message.id);
-//         });
-//
-//         return false; // Default return value if the authorization check is asynchronous
-//       }
+        }
 }

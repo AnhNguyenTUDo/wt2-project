@@ -1,14 +1,14 @@
+
+@import "../../../styles.sass"
+@include styles
+@include custom-font
+@include custom-btn
+
 .btn
-  border: 1px solid #99A98F
-  border-radius: 3px
-  border-width: 3px
-  color: #99A98F
-  font-weight: bold
-  font-size: 20px
+  @extend .custom-btn
 
 .form-label
-  color: #99A98F
-  font-weight: bold
-  font-size: 20px
+  @extend .custom-font
+  color: $custom-green
 
 

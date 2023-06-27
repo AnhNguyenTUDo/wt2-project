@@ -1,13 +1,16 @@
+$custom-green: #99A98F
+$custom-yellow: #FFF8DE
+
+@import "../../../styles.sass"
+
+@include styles
+@include custom-font
+@include custom-btn
+
 .btn
-  border: 1px solid #99A98F
-  border-radius: 3px
-  border-width: 3px
-  color: #99A98F
+  @extend .custom-btn
   font-weight: bold
 
-.btn:hover
-  background-color: #FFF8DE
-
 .form-label
-  color: #99A98F
-  font-size: 20px
+  font-size: 1.2em
+  color: $custom-green

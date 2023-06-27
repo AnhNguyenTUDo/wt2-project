@@ -1,28 +1,33 @@
+$custom-green: #99A98F
+$custom-yellow: #FFF8DE
+
+@import "../styles.sass"
+
+@include styles
 
 .custom-container
-  background-color: #FFF8DE
-  border: 1px solid #99A98F
-  border-radius: 3px
-  border-width: 3px
-  color: #99A98F
-  font-size: 30px
+  @extend .custom-container-border
+  background-color: $custom-yellow
+  font-size: 2.2em
+  text-align: center
 
-.nav-link.active
-  background-color: #FFF8DE
-
-
-.nav-link:hover
-  background-color: #FFF8DE
 
 .nav-link
-  border: 1px solid #99A98F
-  border-radius: 3px
-  border-width: 3px
-  color: #99A98F
+  @extend .custom-container-border
+  color: $custom-green
   font-weight: bold
 
+  &:hover
+    background-color: $custom-yellow
+    color: $custom-green
+
+  &.active
+    background-color: $custom-yellow
+    color: $custom-green
+
+
 .smaller-text
-  font-size: 25px
+  font-size: 0.8em
 
 
 

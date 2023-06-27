@@ -1,38 +1,34 @@
-.btn
-  border: 1px solid #99A98F
-  border-radius: 3px
-  border-width: 3px
-  color: #99A98F
-  font-weight: bold
+$custom-green: #99A98F
+$custom-yellow: #FFF8DE
 
-.btn:hover
-  background-color: #FFF8DE
+@import "../../styles.sass"
+
+@include styles
+@include custom-font
+@include custom-btn
+
+.btn
+  @extend .custom-btn
+
+
+.edit-delete-btn
+  @extend .custom-btn
+  margin-top:0.4em
+  margin-bottom: 0.4em
 
 .custom-text
-  color: #99A98F
+  color: $custom-green
 
 .message-list-container
-  height: 380px
+  @extend .custom-container-border
+  padding: 10px
+  background-color: $custom-yellow
+  height: 20em
   overflow-y: scroll
   max-width: 100vw
-
-
-.form-container
-  position: fixed
-  bottom: 0
-  left: 0
-  width: 100%
-  padding: 20px
-  margin: 0 10px
-
-.box-container
-  border: 1px solid #99A98F
-  border-radius: 5px
-  border-width: 5px
-  padding: 10px
-  background-color: #FFF8DE
+  border-radius: 1.2em
 
 .hr-custom
-  border-top: 1px dotted #99A98F
-  border-radius: 5px
+  border-top: 1px dotted $custom-green
   border-width: 5px
+

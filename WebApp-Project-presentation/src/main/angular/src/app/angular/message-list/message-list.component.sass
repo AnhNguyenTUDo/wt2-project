@@ -1,61 +1,31 @@
+$custom-green: #99A98F
+$custom-lighter-green: #E9ECEF
+$custom-yellow: #FFF8DE
+
+@import "../../../styles.sass"
+
+@include styles
+@include custom-font
+@include custom-btn
+
 .message-content
   word-break: break-word
 
 .btn
-  border: 1px solid #99A98F
-  border-radius: 3px
-  border-width: 3px
-  color: #99A98F
-  font-weight: bold
+  @extend .custom-btn
+  font-size: 0.8em
 
-.btn-confirm-edit
   &.disabled
-    background-color: #E9ECEF
+    background-color: $custom-lighter-green
 
   &:not(.disabled)
-    background-color: #E9ECEF
+    background-color: $custom-lighter-green
 
   &:hover:not(.disabled)
-      background-color: #FFF8DE
-
-.btn-edit
-  &.disabled
-    background-color: #E9ECEF
-
-  &:not(.disabled)
-      background-color: #E9ECEF
-
-  &:hover:not(.disabled)
-    background-color: #FFF8DE
-
-
-.btn-delete
-  &.disabled
-    background-color: #E9ECEF
-
-
-  &:not(.disabled)
-    background-color: #E9ECEF
-
-
-  &:hover:not(.disabled)
-      background-color: #FFF8DE
-
-.custom-button-container
-  position: absolute
-  top: 0
-  right: 0
+    background-color: $custom-yellow
 
 .message-content
   font-size: 20px
 
-.btn-show-delete:hover
-  background-color: #FFF8DE
-
-.btn-show-edit:hover
-  background-color: #FFF8DE
-
-.parent-container
-  position: relative
-  overflow: hidden
-  height: 30px
+hr
+  margin-top: 1rem

@@ -4,20 +4,35 @@
 
 <div *ngIf="isLoggedIn">
 
-  <div class="row">
-    <div class="custom-text col-10"> <h2>Welcome, {{ loggedInUsername }}!</h2></div>
+  <div class="hr-custom pt-3 row">
+    <div class="col-10">
+      <h2 class="custom-text display-6">Welcome, {{ loggedInUsername }}!</h2>
+    </div>
     <div class="col-2 d-flex justify-content-end align-items-center">
-      <button class="btn btn-outline-secondary rounded-5" (click)="logout()">Logout</button>
+      <button class="btn" (click)="logout()">Logout</button>
     </div>
   </div>
 
   <div class="hr-custom my-3 row" >
-    <h4 class="custom-text mt-3 title">Messages</h4>
-      <div class="box-container mb-2 message-list-container ">
-        <app-message-list [messages]="messages"></app-message-list>
-      </div>
-      <div class="mt-2">
-        <app-create-message (created)="load()"></app-create-message>
-      </div>
+    <h4 class="custom-text display-6 col-10 mt-3 title">Messages</h4>
+
+    <div class="col-2 d-flex justify-content-end align-items-center">
+      <button
+            class="btn edit-delete-btn me-2"
+            (click)="toggleEditButtons($event)">Edit
+      </button>
+
+      <button
+            class="btn edit-delete-btn"
+            (click)="toggleDeleteButtons($event)">Delete
+      </button>
+    </div>
+
+    <div class="mb-2 message-list-container ">
+      <app-message-list [parent]="this" [messages]="messages"></app-message-list>
+    </div>
+    <div class="mt-2">
+      <app-create-message (created)="load()"></app-create-message>
+    </div>
   </div>
 </div>
