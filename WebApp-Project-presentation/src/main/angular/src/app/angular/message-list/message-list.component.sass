@@ -1,3 +1,35 @@
 .message-content
   word-break: break-word
 
+.btn
+  border: 1px solid #99A98F
+  border-radius: 3px
+  border-width: 3px
+  color: #99A98F
+  font-weight: bold
+
+.btn-edit
+  &.disabled
+    background-color: #E9ECEF
+
+  &:not(.disabled)
+      background-color: #E9ECEF
+
+  &:hover:not(.disabled)
+    background-color: #FFF8DE
+
+
+.btn-delete
+  &.disabled
+    background-color: #E9ECEF
+
+
+  &:not(.disabled)
+    background-color: #E9ECEF
+
+
+  &:hover:not(.disabled)
+      background-color: #FFF8DE
+
+.message-content
+  font-size: 20px

@@ -13,22 +13,25 @@
     </ng-container>
 
     <div class="d-flex">
+
+      <button *ngIf="isEditing && message.id === editedMessage.id"
+              class="btn btn-confirm-edit rounded-3 btn-sm btn-primary"
+              (click)="editMessage()"> Confirm change
+      </button>
+
     <button [disabled]="!(canModifyMessage(message) | async)"
-            class="btn btn-sm btn-primary me-2"
+            class="btn btn-edit rounded-5 btn-sm me-2"
             (click)="toEditMessage(message)">
       Edit
     </button>
 
     <button [disabled]="!(canModifyMessage(message) | async)"
-            class="btn btn-sm btn-danger me-2"
+            class="btn btn-delete btn-sm rounded-5 me-2"
             (click)="deleteMessage(message)">
       Delete
     </button>
 
-    <button *ngIf="isEditing && message.id === editedMessage.id"
-            class="btn btn-sm btn-primary"
-            (click)="editMessage()"> Confirm change
-    </button>
+
     </div>
   </li>
 

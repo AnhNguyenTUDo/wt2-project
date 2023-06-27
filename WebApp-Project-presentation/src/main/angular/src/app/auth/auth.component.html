@@ -5,17 +5,15 @@
 <div *ngIf="isLoggedIn">
 
   <div class="row">
-    <div class="col-10 d-flex justify-content-end "> <h2>Welcome, {{ loggedInUsername }}!</h2></div>
+    <div class="custom-text col-10"> <h2>Welcome, {{ loggedInUsername }}!</h2></div>
     <div class="col-2 d-flex justify-content-end align-items-center">
-      <button class="btn btn-outline-secondary" (click)="logout()">Logout</button>
+      <button class="btn btn-outline-secondary rounded-5" (click)="logout()">Logout</button>
     </div>
   </div>
 
-  <div class="row" >
-
-    <h4 class="title">Messages</h4>
-    <hr>
-      <div class="message-list-container box-container mb-2">
+  <div class="hr-custom my-3 row" >
+    <h4 class="custom-text mt-3 title">Messages</h4>
+      <div class="box-container mb-2 message-list-container ">
         <app-message-list [messages]="messages"></app-message-list>
       </div>
       <div class="mt-2">

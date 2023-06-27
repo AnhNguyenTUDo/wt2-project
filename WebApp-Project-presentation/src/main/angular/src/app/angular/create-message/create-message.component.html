@@ -20,7 +20,7 @@
     <form (submit)="createMessage($event)">
       <div class="mb-3">
         <label class="form-label">Content <span [ngClass]="getCharsLeft() < 0 ? 'text-danger' : 'text-muted'">({{getCharsLeft()}})</span></label>
-        <textarea name="content" class="form-control" required [(ngModel)]="content" placeholder="Enter some content"></textarea>
+        <textarea name="content" class="form-control" required [(ngModel)]="content" placeholder="Type something"></textarea>
       </div>
       <button class="btn w-100 btn-outline-primary" [disabled]="!canCreate">Send Message</button>
     </form>

@@ -18,5 +18,5 @@
     <label class="form-label">Password</label>
     <input name="password" type="password" class="form-control" [(ngModel)]="password" required placeholder="Enter your password">
   </div>
-  <button class="btn w-100 btn-outline-primary" [disabled]="!canRegister">Register</button>
+  <button class="btn w-100 " [disabled]="!canRegister()">Register</button>
 </form>
