@@ -8,6 +8,16 @@
   color: #99A98F
   font-weight: bold
 
+.btn-confirm-edit
+  &.disabled
+    background-color: #E9ECEF
+
+  &:not(.disabled)
+    background-color: #E9ECEF
+
+  &:hover:not(.disabled)
+      background-color: #FFF8DE
+
 .btn-edit
   &.disabled
     background-color: #E9ECEF
@@ -31,5 +41,21 @@
   &:hover:not(.disabled)
       background-color: #FFF8DE
 
+.custom-button-container
+  position: absolute
+  top: 0
+  right: 0
+
 .message-content
   font-size: 20px
+
+.btn-show-delete:hover
+  background-color: #FFF8DE
+
+.btn-show-edit:hover
+  background-color: #FFF8DE
+
+.parent-container
+  position: relative
+  overflow: hidden
+  height: 30px

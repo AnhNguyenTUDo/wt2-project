@@ -1,4 +1,18 @@
 <!--<h2>Message List</h2>-->
+<div class="parent-container">
+<div class="custom-button-container">
+  <button
+        class="btn btn-show-edit rounded-5 btn-sm me-2"
+        (click)="toggleEditButtons()">Edit
+  </button>
+
+  <button
+        class="btn btn-show-delete rounded-5 btn-sm me-2"
+        (click)="toggleDeleteButtons()">Delete
+  </button>
+</div>
+</div>
+
 <ul>
   <li *ngFor="let message of messages" class="d-flex justify-content-between align-items-center mb-3">
     <ng-container *ngIf="!isEditing || message.id !== editedMessage.id">
@@ -15,18 +29,20 @@
     <div class="d-flex">
 
       <button *ngIf="isEditing && message.id === editedMessage.id"
-              class="btn btn-confirm-edit rounded-3 btn-sm btn-primary"
+              class="btn btn-confirm-edit btn-sm rounded-5 me-2"
               (click)="editMessage()"> Confirm change
       </button>
 
     <button [disabled]="!(canModifyMessage(message) | async)"
-            class="btn btn-edit rounded-5 btn-sm me-2"
+            class="btn btn-edit btn-sm rounded-5 me-2"
+            [ngClass]="{ 'd-none': !showEditButtons}"
             (click)="toEditMessage(message)">
       Edit
     </button>
 
     <button [disabled]="!(canModifyMessage(message) | async)"
             class="btn btn-delete btn-sm rounded-5 me-2"
+            [ngClass]="{ 'd-none': !showDeleteButtons}"
             (click)="deleteMessage(message)">
       Delete
     </button>

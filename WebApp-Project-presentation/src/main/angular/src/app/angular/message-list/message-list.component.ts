@@ -15,6 +15,8 @@ export class MessageListComponent  implements OnInit{
     public isEditing: boolean = false;
     public editedMessage: Message;
     public authorizationStatus: { [messageId: string]: boolean} = {};
+    public showEditButtons: Boolean = false;
+    public showDeleteButtons: Boolean = false;
 
     @Input()
     public messages: Message[] = [];
@@ -96,6 +98,13 @@ export class MessageListComponent  implements OnInit{
 
 //       this.checkAuthorizationStatus(messageId);
 //       return false;
+     }
+
+     toggleEditButtons(){
+      this.showEditButtons = !this.showEditButtons;
+     }
+     toggleDeleteButtons() {
+      this.showDeleteButtons = !this.showDeleteButtons;
      }
 //
 //       checkAuthorizationStatus(messageId: string) {
