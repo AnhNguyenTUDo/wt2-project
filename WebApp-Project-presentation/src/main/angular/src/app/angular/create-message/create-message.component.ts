@@ -32,23 +32,9 @@ export class CreateMessageComponent {
   }
   getCharsLeft(): number {
       return 255 - this.content.length;
-    }
+  }
 
-    get canCreate(): boolean {
-      return this.getCharsLeft() > 0 && this.content.trim() !== '';
-    }
-//   onSubmit(): void {
-//     if (this.content) {
-//       this.messageService.create(this.content).subscribe(
-//         (message) => {
-//           console.log('Message created:', message);
-//           // Optionally, perform any additional actions after creating the message
-//         },
-//         (error) => {
-//           console.error('Error creating message:', error);
-//           // Handle error case, display error message, etc.
-//         }
-//       );
-//     }
-//   }
+  get canCreate(): boolean {
+    return this.getCharsLeft() > 0 && this.content.trim() !== '';
+  }
 }

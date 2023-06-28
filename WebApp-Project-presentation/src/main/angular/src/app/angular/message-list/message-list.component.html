@@ -1,43 +1,38 @@
-
 <ul>
   <li *ngFor="let message of messages" class="row align-items-center">
+
     <div class="col-7 ">
-    <ng-container *ngIf="!isEditing || message.id !== editedMessage.id">
-      <div><span class="message-content">{{ message.content }}</span><br>
-        <span class="text-muted">- from {{ message.sender }}</span></div>
+      <ng-container *ngIf="!isEditing || message.id !== editedMessage.id">
+        <div><span class="message-content">{{ message.content }}</span><br>
+          <span class="text-muted">- from {{ message.sender }}</span></div>
+      </ng-container>
 
-
-    </ng-container>
-
-    <ng-container *ngIf="isEditing && message.id === editedMessage.id">
-      <input [(ngModel)]="editedMessage.content" type="text">
-    </ng-container>
+      <ng-container *ngIf="isEditing && message.id === editedMessage.id">
+        <input [(ngModel)]="editedMessage.content" type="text">
+      </ng-container>
     </div>
-    <div class="col-5 d-flex justify-content-end ">
 
-      <button *ngIf="isEditing && message.id === editedMessage.id"
-              class="btn me-2"
-              (click)="editMessage()"> Confirm change
+    <div class="col-5 d-flex justify-content-end ">
+      <button (click)="editMessage()"
+              *ngIf="isEditing && message.id === editedMessage.id"
+              class="btn me-2"> Confirm change
       </button>
 
-    <button [disabled]="!(canModifyMessage(message) | async)"
-            class="btn me-2"
-            *ngIf="parent.showEditButtons"
-            (click)="toEditMessage(message)">
-      Edit
-    </button>
+      <button (click)="toEditMessage(message)"
+              *ngIf="parent.showEditButtons"
+              [disabled]="!(canModifyMessage(message) | async)"
+              class="btn me-2">
+        Edit
+      </button>
 
-    <button [disabled]="!(canModifyMessage(message) | async)"
-            class="btn"
-            *ngIf="parent.showDeleteButtons"
-            (click)="deleteMessage(message)">
-      Delete
-    </button>
-
-
+      <button (click)="deleteMessage(message)"
+              *ngIf="parent.showDeleteButtons"
+              [disabled]="!(canModifyMessage(message) | async)"
+              class="btn">
+        Delete
+      </button>
     </div>
-
     <hr>
-  </li>
 
+  </li>
 </ul>

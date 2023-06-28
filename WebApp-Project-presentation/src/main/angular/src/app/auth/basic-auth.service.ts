@@ -13,7 +13,7 @@ export class BasicAuthService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<boolean> {
-    const encodedToken = btoa(`${username}:${password}`);
+    const encodedToken = window.btoa(decodeURIComponent(encodeURIComponent(username + ':' + password)));
     const authHeader = `Basic ${encodedToken}`;
 
     const headers = new HttpHeaders({
@@ -22,22 +22,19 @@ export class BasicAuthService {
     });
 
     return this.http.post<any>(`${environment.apiUrl}/users/login`, {}, { headers }).pipe(
-        switchMap(body => {
-          this.token = encodedToken;
-          console.log('token: ' + this.token);
-          this.username = username;
+      switchMap(body => {
+        this.token = encodedToken;
+        this.username = username;
 
-          // Check if the user is an admin
-          return this.isAdminCheck().pipe(
-            map(isAdmin => {
-              this.isAdmin = isAdmin;
-              console.log('isAdmin: ' + this.isAdmin);
-              return true;
-            }),
-            catchError(() => of(false))
-          );
-        }),
-        catchError(() => of(false))
+        return this.isAdminCheck().pipe(
+          map(isAdmin => {
+            this.isAdmin = isAdmin;
+            return true;
+          }),
+          catchError(() => of(false))
+        );
+      }),
+      catchError(() => of(false))
       );
     }
 
@@ -48,27 +45,20 @@ export class BasicAuthService {
     );
   }
 
-//   getUserRole(): Observable<boolean> {
-//     const headers = this.getAuthHeaders();
-//     return this.http.get<boolean>(`${environment.apiUrl}/users/role`, { headers }).pipe(
-//       map(role => role === 'admin'),
-//       catchError(() => of(false))
-//     );
-//   }
-
   isAdminCheck(): Observable<boolean> {
       const headers = this.getAuthHeaders();
       return this.http.get<boolean>(`${environment.apiUrl}/users/role`, { headers }).pipe(
         catchError(() => of(false))
       );
     }
-    resetAdminStatus():void{
+
+  resetAdminStatus():void{
     this.isAdmin = false;
-    }
+  }
 
   getBaseUrl(): string {
       return `${environment.apiUrl}`;
-    }
+  }
 
   logout(): Observable<boolean> {
     this.token = null;
@@ -76,7 +66,9 @@ export class BasicAuthService {
   }
 
   getAuthHeaders(): HttpHeaders {
-    return this.token ? new HttpHeaders({ 'Authorization': `Basic ${this.token}` }) : new HttpHeaders();
+    return this.token == null ? new HttpHeaders() : new HttpHeaders({
+      "Authorization": `Basic ${this.token}`
+    });
   }
 
   get isLoggedIn(): boolean {

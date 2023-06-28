@@ -12,83 +12,81 @@ import { Observable, of } from 'rxjs';
 })
 export class MessageListComponent  implements OnInit{
 
-    public isEditing: boolean = false;
-    public editedMessage: Message;
-    public authorizationStatus: { [messageId: string]: boolean} = {};
+  public isEditing: boolean = false;
+  public editedMessage: Message;
+  public hasAuthorization: { [messageId: string]: boolean} = {};
 
-    @Input()
-    parent: any;
+  @Input()
+  parent: any;
 
-    @Input()
-    public messages: Message[] = [];
+  @Input()
+  public messages: Message[] = [];
 
-    constructor(private messageService: MessageService,
-                private authService: BasicAuthService) {
-      this.editedMessage = {} as Message;
-      }
+  constructor(private messageService: MessageService,
+              private authService: BasicAuthService) {
+    this.editedMessage = {} as Message;
+  }
 
-    ngOnInit() {
-      this.getAll();
-    }
+  ngOnInit() {
+    this.getAll();
+  }
 
-    getAll() {
-        this.messageService.getAll().subscribe((messages) => {
-          this.messages = messages;
-        });
-      }
+  getAll() {
+    this.messageService.getAll().subscribe((messages) => {
+      this.messages = messages;
+    });
+  }
 
-    toEditMessage(message:Message) {
-      this.editedMessage = { ...message};
-      this.isEditing = true;
-    }
+  toEditMessage(message:Message) {
+    this.editedMessage = { ...message};
+    this.isEditing = true;
+  }
 
-    editMessage() {
-      this.messageService.update(this.editedMessage.id, this.editedMessage.content)
-          .subscribe(updatedMessage => {
-//             console.log('Message updated:', updatedMessage);
-            this.isEditing = false;
-            this.editedMessage = {} as Message;
+  editMessage() {
+    this.messageService.update(this.editedMessage.id, this.editedMessage.content)
+      .subscribe(updatedMessage => {
+        this.isEditing = false;
+        this.editedMessage = {} as Message;
 
-            const index = this.messages.findIndex(m => m.id === updatedMessage.id);
-                    if (index > -1) {
-                      this.messages[index] = updatedMessage;
-                    }
-
-          }, error => {
-            console.error('Error updating message:', error);
-            this.editedMessage = {} as Message;
-          });
-    }
-
-    deleteMessage(message: Message) {
-      this.messageService.delete(message.id)
-        .subscribe(() => {
-           this.messages = this.messages.filter(m => m.id !== message.id);
-//            console.log('Message deleted:', message);
-        }, error => {
-           console.error('Error deleting message:', error);
-          });
-    }
-
-    canModifyMessage(message: Message): Observable<boolean>{
-      const messageId = message.id.toString();
-      if (this.authService.isAdmin) {
-          return of(true);
-        }
-
-      if (this.authorizationStatus.hasOwnProperty(messageId)) {
-            return of(this.authorizationStatus[messageId]);
+        const index = this.messages.findIndex(m => m.id === updatedMessage.id);
+          if (index >= 0) {
+            this.messages[index] = updatedMessage;
           }
+      }, error => {
+        console.error('Error updating message:', error);
+        this.editedMessage = {} as Message;
+      });
+  }
 
-      return this.authService.checkAuthorization(messageId).pipe(
-          map((response: boolean) => {
-            this.authorizationStatus[messageId] = response;
-            return response;
-          }),
-          catchError((error) => {
-            console.error('Error checking authorization:', error);
-            return of(false);
-          })
-        );
+  deleteMessage(message: Message) {
+    this.messageService.delete(message.id)
+      .subscribe(() => {
+        this.messages = this.messages.filter(m => m.id !== message.id);
+      }, error => {
+         console.error('Error deleting message:', error);
         }
+      );
+  }
+
+  canModifyMessage(message: Message): Observable<boolean>{
+    const messageId = message.id.toString();
+    if (this.authService.isAdmin) {
+        return of(true);
+    }
+
+    if (this.hasAuthorization.hasOwnProperty(messageId)) {
+          return of(this.hasAuthorization[messageId]);
+    }
+
+    return this.authService.checkAuthorization(messageId).pipe(
+        map((response: boolean) => {
+          this.hasAuthorization[messageId] = response;
+          return response;
+        }),
+        catchError((error) => {
+          console.error('Error checking authorization:', error);
+          return of(false);
+        })
+      );
+    }
 }

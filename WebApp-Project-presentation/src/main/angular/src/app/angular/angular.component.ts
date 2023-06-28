@@ -11,18 +11,18 @@ export class AngularComponent implements OnInit {
 
   public messages: Message[] = [];
 
-  constructor(protected messageService: MessageService){
-  }
+  constructor(protected messageService: MessageService) { }
+
   ngOnInit() {
     this.load();
     }
 
-    load(): void {
-      this.messageService.getAll().subscribe({
-        next: messages => this.messages = messages,
-        error: error => {
-                console.error(error);
-                console.log("cannot get messages");}
-      })
-    }
+  load(): void {
+    this.messageService.getAll().subscribe({
+      next: messages => this.messages = messages,
+      error: error => {
+        console.error(error);
+      }
+    })
+  }
 }

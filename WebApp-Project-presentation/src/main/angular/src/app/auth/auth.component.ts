@@ -11,7 +11,7 @@ import { MessageService } from '../angular/message.service'
   styleUrls: ['./auth.component.sass'],
   providers: [AuthMessageService, MessageService]
 })
-export class AuthComponent  extends AngularComponent implements OnInit {
+export class AuthComponent extends AngularComponent implements OnInit {
 
     @Output()
     editToggleEvent = new EventEmitter<boolean>();
@@ -26,40 +26,30 @@ export class AuthComponent  extends AngularComponent implements OnInit {
               public authService: BasicAuthService) {
   super(authMessageService);}
 
-//   ngOnInit(): void {
-//       this.isLoggedIn = this.authService.isLoggedIn();
-//     }
+  logout(): void {
 
-//     load(): void {
-//       this.isLoggedIn = this.authService.isLoggedIn();
-//     }
+  this.authService.logout().subscribe(() => {
+        this.authService.resetAdminStatus(); // Reset isAdmin to false
+        this.messages = [];
+      });
 
-    logout(): void {
-
-    this.authService.logout().subscribe(() => {
-          this.authService.resetAdminStatus(); // Reset isAdmin to false
-          this.messages = [];
-        });
-
-    }
-    get isLoggedIn(): boolean {
-        return this.authService.isLoggedIn;
-        console.log("isLoggedIn" + this.isLoggedIn);
-      }
-
-    get loggedInUsername(): string | null {
-      return this.authService.username;
+  }
+  get isLoggedIn(): boolean {
+      return this.authService.isLoggedIn;
+      console.log("isLoggedIn" + this.isLoggedIn);
     }
 
-     toggleEditButtons(e: Event){
-//      e.preventDefault();
-      this.showEditButtons = !this.showEditButtons;
-      this.editToggleEvent.emit(this.showEditButtons);
-     }
-     toggleDeleteButtons(e: Event) {
-//       e.preventDefault();
-      this.showDeleteButtons = !this.showDeleteButtons;
-      this.deleteToggleEvent.emit(this.showDeleteButtons);
-     }
+  get loggedInUsername(): string | null {
+    return this.authService.username;
+  }
+
+   toggleEditButtons(e: Event){
+    this.showEditButtons = !this.showEditButtons;
+    this.editToggleEvent.emit(this.showEditButtons);
+   }
+   toggleDeleteButtons(e: Event) {
+    this.showDeleteButtons = !this.showDeleteButtons;
+    this.deleteToggleEvent.emit(this.showDeleteButtons);
+   }
 }
 

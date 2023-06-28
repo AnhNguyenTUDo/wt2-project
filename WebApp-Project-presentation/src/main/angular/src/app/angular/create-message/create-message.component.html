@@ -1,14 +1,15 @@
+<div *ngIf="errorMessage != null" class="alert alert-danger alert-dismissible">
+  {{errorMessage}}
+  <button (click)="errorMessage = null" aria-label="Close" class="btn-close" data-bs-dismiss="alert"
+          type="button"></button>
+</div>
 
-    <div class="alert alert-danger alert-dismissible" *ngIf="errorMessage != null">
-      {{errorMessage}}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="errorMessage = null"></button>
-    </div>
-
-    <form (submit)="createMessage($event)">
-      <div class="mb-3">
-        <label class="form-label">Content <span [ngClass]="getCharsLeft() < 0 ? 'text-danger' : 'text-muted'">({{getCharsLeft()}})</span></label>
-        <textarea name="content" class="form-control" required [(ngModel)]="content" placeholder="Type something"></textarea>
-      </div>
-      <button class="btn w-100 btn-outline-primary" [disabled]="!canCreate">Send Message</button>
-    </form>
+<form (submit)="createMessage($event)">
+  <div class="mb-3">
+    <label class="form-label">Content <span [ngClass]="getCharsLeft() < 0 ? 'text-danger' : 'text-muted'">({{getCharsLeft()}})</span></label>
+    <textarea [(ngModel)]="content" class="form-control" name="content" placeholder="Type something"
+              required></textarea>
+  </div>
+  <button [disabled]="!canCreate" class="btn w-100 btn-outline-primary">Send Message</button>
+</form>
 

@@ -1,24 +1,30 @@
 <div class="center-element">
-<div class="alert alert-danger alert-dismissible" *ngIf="errorMessage != null">
-  {{errorMessage}}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="errorMessage = null"></button>
-</div>
 
-<div class="alert alert-success alert-dismissible" *ngIf="successMessage !== ''">
-  {{ successMessage }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="successMessage = ''"></button>
-</div>
-
-
-<form (submit)="register()">
-  <div class="mb-3">
-    <label class="form-label">Username</label>
-    <input name="name" type="text" class="form-control" [(ngModel)]="username" required placeholder="Enter a username">
+  <div *ngIf="errorMessage != null" class="alert alert-danger alert-dismissible">
+    {{errorMessage}}
+    <button (click)="errorMessage = null" aria-label="Close" class="btn-close" data-bs-dismiss="alert"
+            type="button"></button>
   </div>
-  <div class="mb-3">
-    <label class="form-label">Password</label>
-    <input name="password" type="password" class="form-control" [(ngModel)]="password" required placeholder="Enter a password">
+
+  <div *ngIf="successMessage !== ''" class="alert alert-success alert-dismissible">
+    {{ successMessage }}
+    <button (click)="successMessage = ''" aria-label="Close" class="btn-close" data-bs-dismiss="alert"
+            type="button"></button>
   </div>
-  <button class="btn w-100 " [disabled]="!canRegister()">Register</button>
-</form>
+
+
+  <form (submit)="register()">
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      <input [(ngModel)]="username" class="form-control" name="name" placeholder="Enter a username" required
+             type="text">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input [(ngModel)]="password" class="form-control" name="password" placeholder="Enter a password" required
+             type="password">
+    </div>
+    <button [disabled]="!canRegister()" class="btn w-100 ">Register</button>
+  </form>
+
 </div>
