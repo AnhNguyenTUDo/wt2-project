@@ -11,13 +11,9 @@ import { AngularComponent } from './angular/angular.component';
 import { AuthComponent } from './auth/auth.component';
 import { RegisterComponent } from './register/register.component';
 import { CreateMessageComponent } from './angular/create-message/create-message.component';
-import { MessageDetailComponent } from './angular/message-detail/message-detail.component';
-import { EditMessageComponent } from './angular/edit-message/edit-message.component';
-import { DeleteMessageComponent } from './angular/delete-message/delete-message.component';
 import { MessageListComponent } from './angular/message-list/message-list.component';
 import { EnvironmentBadgeComponent } from './shared/environment-badge/environment-badge.component';
 import { LoginComponent } from './auth/login/login.component';
-import { CreateMessageAuthComponent } from './auth/create-message-auth/create-message-auth.component';
 
 
 
@@ -28,13 +24,9 @@ import { CreateMessageAuthComponent } from './auth/create-message-auth/create-me
     AuthComponent,
     RegisterComponent,
     CreateMessageComponent,
-    MessageDetailComponent,
-    EditMessageComponent,
-    DeleteMessageComponent,
     MessageListComponent,
     EnvironmentBadgeComponent,
     LoginComponent,
-    CreateMessageAuthComponent
   ],
   imports: [
     BrowserModule,
