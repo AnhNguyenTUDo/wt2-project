@@ -1,4 +1,6 @@
+de\ls5\wt2\auth\AdminInitializer.class
 de\ls5\wt2\auth\MyRealm.class
 de\ls5\wt2\service\MessageService.class
+de\ls5\wt2\auth\UserREST.class
 de\ls5\wt2\rest\MessageREST.class
 de\ls5\wt2\service\UserService.class

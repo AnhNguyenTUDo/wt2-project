@@ -70,10 +70,12 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
+                                    <executable>cmd</executable> <!-- or 'bash' if not on Windows -->
                                     <workingDirectory>${project.basedir}/src/main/angular</workingDirectory>
-                                    <executable>npm</executable>
                                     <arguments>
-                                        <argument>install</argument>
+                                        <argument>/c</argument> <!-- or '-c' for bash -->
+                                        <argument>npm</argument>
+                                        <argument>install"</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
@@ -84,14 +86,15 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
+                                    <executable>cmd</executable> <!-- or 'bash' if not on Windows -->
                                     <workingDirectory>${project.basedir}/src/main/angular</workingDirectory>
-                                    <executable>npm</executable>
                                     <arguments>
+                                        <argument>/c</argument> <!-- or '-c' for bash -->
+                                        <argument>npm</argument>
                                         <argument>run</argument>
                                         <argument>build</argument>
                                         <argument>--</argument>
-                                        <argument>--output-path=${project.build.directory}/${project.build.finalName}
-                                        </argument>
+                                        <argument>--output-path=${project.build.directory}/${project.build.finalName}</argument>
                                         <argument>--base-href=/</argument>
                                     </arguments>
                                 </configuration>
