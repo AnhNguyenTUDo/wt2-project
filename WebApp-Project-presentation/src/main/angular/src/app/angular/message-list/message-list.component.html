@@ -8,7 +8,7 @@
       </ng-container>
 
       <ng-container *ngIf="isEditing && message.id === editedMessage.id">
-        <input [(ngModel)]="editedMessage.content" type="text">
+        <input name="editing" [(ngModel)]="editedMessage.content" type="text">
       </ng-container>
     </div>
 
